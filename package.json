@@ -1,0 +1,36 @@
+{
+  "name": "protos",
+  "description": "protos",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "npx husky install",
+    "clean": "rm -rf ./packages/logic && mkdir -p ./packages/logic",
+    "build": "npm run clean && cd ./packages/logic && python3 -m grpc_tools.protoc -I../protos --python_out=. --pyi_out=. --grpc_python_out=. ../protos/monitor.proto"
+  },
+  "private": true,
+  "devDependencies": {
+    "@commitlint/cli": "latest",
+    "@commitlint/config-conventional": "latest",
+    "husky": "latest",
+    "lint-staged": "latest",
+    "prettier": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morajlab-aprp/protos.git"
+  },
+  "author": {
+    "name": "Morteza Jamali",
+    "email": "mortezajamali4241@gmail.com",
+    "url": "https://moraj.ir"
+  },
+  "bugs": {
+    "url": "https://github.com/morajlab-aprp/protos/issues"
+  },
+  "homepage": "https://github.com/morajlab-aprp/protos#readme",
+  "lint-staged": {
+    "**/*": "prettier -w -u",
+    "**/*.py": "black"
+  }
+}
