@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import monitor_pb2 as monitor__pb2
+import packages.logic.monitor_pb2 as monitor__pb2
 
 
 class MonitorStub(object):
@@ -15,10 +15,10 @@ class MonitorStub(object):
             channel: A grpc.Channel.
         """
         self.SendData = channel.unary_unary(
-            "/Monitor/SendData",
-            request_serializer=monitor__pb2.MonitorRequest.SerializeToString,
-            response_deserializer=monitor__pb2.MonitorReply.FromString,
-        )
+                '/Monitor/SendData',
+                request_serializer=monitor__pb2.MonitorRequest.SerializeToString,
+                response_deserializer=monitor__pb2.MonitorReply.FromString,
+                )
 
 
 class MonitorServicer(object):
@@ -27,53 +27,40 @@ class MonitorServicer(object):
     def SendData(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details("Method not implemented!")
-        raise NotImplementedError("Method not implemented!")
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
 
 def add_MonitorServicer_to_server(servicer, server):
     rpc_method_handlers = {
-        "SendData": grpc.unary_unary_rpc_method_handler(
-            servicer.SendData,
-            request_deserializer=monitor__pb2.MonitorRequest.FromString,
-            response_serializer=monitor__pb2.MonitorReply.SerializeToString,
-        ),
+            'SendData': grpc.unary_unary_rpc_method_handler(
+                    servicer.SendData,
+                    request_deserializer=monitor__pb2.MonitorRequest.FromString,
+                    response_serializer=monitor__pb2.MonitorReply.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-        "Monitor", rpc_method_handlers
-    )
+            'Monitor', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
-# This class is part of an EXPERIMENTAL API.
+ # This class is part of an EXPERIMENTAL API.
 class Monitor(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def SendData(
-        request,
-        target,
-        options=(),
-        channel_credentials=None,
-        call_credentials=None,
-        insecure=False,
-        compression=None,
-        wait_for_ready=None,
-        timeout=None,
-        metadata=None,
-    ):
-        return grpc.experimental.unary_unary(
-            request,
+    def SendData(request,
             target,
-            "/Monitor/SendData",
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Monitor/SendData',
             monitor__pb2.MonitorRequest.SerializeToString,
             monitor__pb2.MonitorReply.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-        )
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

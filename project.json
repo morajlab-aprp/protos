@@ -1,0 +1,91 @@
+{
+  "name": "protos",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/protos/packages/logic",
+  "targets": {
+    "buildProtos": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "python3 -m grpc_tools.protoc -I./packages/protos --python_out=./packages/logic --pyi_out=./packages/logic --grpc_python_out=./packages/logic ./packages/protos/monitor.proto",
+        "cwd": "packages/protos"
+      }
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pydoc-markdown -p packages/logic --render-toc > docs/source/api.md",
+        "cwd": "packages/protos"
+      }
+    },
+    "lock": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "poetry lock --no-update",
+        "cwd": "packages/protos"
+      }
+    },
+    "add": {
+      "executor": "@nxlv/python:add",
+      "options": {}
+    },
+    "update": {
+      "executor": "@nxlv/python:update",
+      "options": {}
+    },
+    "remove": {
+      "executor": "@nxlv/python:remove",
+      "options": {}
+    },
+    "build": {
+      "executor": "@nxlv/python:build",
+      "outputs": ["{projectRoot}/dist"],
+      "options": {
+        "outputPath": "packages/protos/dist",
+        "publish": false,
+        "lockedVersions": true,
+        "bundleLocalDependencies": true
+      }
+    },
+    "install": {
+      "executor": "@nxlv/python:install",
+      "options": {
+        "silent": false,
+        "args": "",
+        "cacheDir": ".cache/pypoetry",
+        "verbose": false,
+        "debug": false
+      }
+    },
+    "lint": {
+      "executor": "@nxlv/python:flake8",
+      "outputs": ["{workspaceRoot}/reports/packages/protos/pylint.txt"],
+      "options": {
+        "outputFile": "reports/packages/protos/pylint.txt"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/reports/packages/protos/unittests",
+        "{workspaceRoot}/coverage/packages/protos"
+      ],
+      "options": {
+        "command": "poetry run pytest tests/",
+        "cwd": "packages/protos"
+      }
+    },
+    "tox": {
+      "executor": "@nxlv/python:tox",
+      "outputs": [
+        "{workspaceRoot}/reports/packages/protos/unittests",
+        "{workspaceRoot}/coverage/packages/protos"
+      ],
+      "options": {
+        "silent": false,
+        "args": ""
+      }
+    }
+  },
+  "tags": []
+}
