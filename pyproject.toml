@@ -1,0 +1,30 @@
+[tool.coverage.run]
+branch = true
+source = [ "protos" ]
+
+[tool.coverage.report]
+exclude_lines = ['if TYPE_CHECKING:']
+show_missing = true
+
+[tool.pytest.ini_options]
+addopts = "--cov --cov-fail-under=100 --cov-report html:'../../coverage/packages/protos/html' --cov-report xml:'../../coverage/packages/protos/coverage.xml' --junitxml='../../reports/packages/protos/unittests/junit.xml' --html='../../reports/packages/protos/unittests/html/index.html'"
+
+[tool.poetry]
+name = "protos"
+version = "1.0.0"
+description = "APRP protobufs"
+authors = [ ]
+license = 'Proprietary'
+readme = 'README.md'
+
+  [[tool.poetry.packages]]
+  include = "protos"
+
+  [tool.poetry.dependencies]
+  python = ">=3.8,<3.12"
+
+  
+
+[build-system]
+requires = ["poetry-core==1.1.0"]
+build-backend = "poetry.core.masonry.api"
